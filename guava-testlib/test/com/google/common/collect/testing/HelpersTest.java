@@ -16,15 +16,17 @@
 
 package com.google.common.collect.testing;
 
-import static com.google.common.collect.testing.Helpers.NullsBeforeB;
-import static com.google.common.collect.testing.Helpers.testComparator;
-
-import com.google.common.annotations.GwtCompatible;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.testing.Helpers.NullsBeforeB;
+
+import static com.google.common.collect.testing.Helpers.testComparator;
+
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 
@@ -46,6 +48,24 @@ public class HelpersTest extends TestCase {
     list.add("a");
     try {
       Helpers.assertEmpty(list);
+      throw new Error();
+    } catch (AssertionFailedError expected) {
+    }
+  }
+
+  public void testIsEmpty_iterable_nonCollection() {
+    final List<Object> list = new ArrayList<Object>();
+    Iterable<Object> iterable = new Iterable<Object>() {
+      @Override
+      public java.util.Iterator<Object> iterator() {
+        return list.iterator();
+      };
+    };
+    Helpers.assertEmpty(iterable);
+
+    list.add("a");
+    try {
+      Helpers.assertEmpty(iterable);
       throw new Error();
     } catch (AssertionFailedError expected) {
     }

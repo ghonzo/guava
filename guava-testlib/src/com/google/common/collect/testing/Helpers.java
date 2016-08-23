@@ -16,13 +16,6 @@
 
 package com.google.common.collect.testing;
 
-import static java.util.Collections.sort;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-
-import com.google.common.annotations.GwtCompatible;
-import com.google.common.annotations.GwtIncompatible;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -37,6 +30,15 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.annotations.GwtIncompatible;
+
+import static java.util.Collections.sort;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 
@@ -77,7 +79,7 @@ public class Helpers {
   private static boolean isEmpty(Iterable<?> iterable) {
     return iterable instanceof Collection
         ? ((Collection<?>) iterable).isEmpty()
-        : iterable.iterator().hasNext();
+        : !iterable.iterator().hasNext();
   }
 
   public static void assertEmpty(Iterable<?> iterable) {
